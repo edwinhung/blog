@@ -1,9 +1,10 @@
 ---
 toc: true
 layout: post
-description: First fastai project
+description: "First fastai project"
 categories: [fastai, deep learning]
-title: Bird Species Image Classifier with fastai
+title: "Bird Species Image Classifier with fastai"
+hide: false
 ---
 
 # Introduction
@@ -26,14 +27,14 @@ The Kaggle dataset contains 58388 training images, 2000 validation images and 20
 img = (path/'train'/'HOATZIN').ls()[0]
 PILImage.create(img)
 ```
-![](/images/bird_classifier//Hoatzin.jpg)
+![](/images/bird_classifier/Hoatzin.jpg)
 
 ## Construct DataLoaders
 The main idea is using transfer learning to build a state-of-the-art deep learning model, which is efficient and saves a lot of training time. 
 
 Before we start training, we need to first create dataloaders which hold our training data in batches. These batches will later be sent in sequence to GPU to train our neural network. One part we are doing differently is randomly split data into training and validation instead of using the given sets, because Gerry notes in dataset description that both given validation and test sets are hand picked as the "best" images, resulting in high evaluation scores. We will still use the given test set as unseen data for evaluation, but keep in mind test set may not be representative of real world data. Let's take a peek at one batch in dataloaders to make sure everything is okay:
 
-![](/images//bird_classifier/batch.PNG)
+![](/images/bird_classifier/batch.PNG)
 
 ## Pretrained Model with timm
 timm is a wonderful library by Ross Wightman that provides state-of-the-art pretrained model for image classification. We will use one of the best models, Efficient Net, specifically "efficientnet_b3a". For more details about timm, please refer to this [repository](https://github.com/rwightman/pytorch-image-models).

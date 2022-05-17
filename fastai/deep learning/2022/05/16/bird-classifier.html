@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Bird Species Image Classifier with fastai | Shangchieh(Edwin) Hung</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Bird Species Image Classifier with fastai" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="First fastai project" />
+<meta property="og:description" content="First fastai project" />
+<link rel="canonical" href="https://edwinhung.github.io/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html" />
+<meta property="og:url" content="https://edwinhung.github.io/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html" />
+<meta property="og:site_name" content="Shangchieh(Edwin) Hung" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-05-16T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Bird Species Image Classifier with fastai" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-05-16T00:00:00-05:00","datePublished":"2022-05-16T00:00:00-05:00","description":"First fastai project","headline":"Bird Species Image Classifier with fastai","mainEntityOfPage":{"@type":"WebPage","@id":"https://edwinhung.github.io/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html"},"url":"https://edwinhung.github.io/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/fastpages/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://edwinhung.github.io/fastpages/feed.xml" title="Shangchieh(Edwin) Hung" /><link rel="shortcut icon" type="image/x-icon" href="/fastpages/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/fastpages/">Shangchieh(Edwin) Hung</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/fastpages/about/">About Me</a><a class="page-link" href="/fastpages/search/">Search</a><a class="page-link" href="/fastpages/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Bird Species Image Classifier with fastai</h1><p class="page-description">First fastai project</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-05-16T00:00:00-05:00" itemprop="datePublished">
+        May 16, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/fastpages/categories/#fastai">fastai</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/fastpages/categories/#deep learning">deep learning</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h1"><a href="#training-neural-network-with-fastai">Training neural network with fastai</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#install-and-import-libraries">Install and import libraries</a></li>
+<li class="toc-entry toc-h2"><a href="#dataset">Dataset</a></li>
+<li class="toc-entry toc-h2"><a href="#construct-dataloaders">Construct DataLoaders</a></li>
+<li class="toc-entry toc-h2"><a href="#pretrained-model-with-timm">Pretrained Model with timm</a></li>
+<li class="toc-entry toc-h2"><a href="#training">Training</a></li>
+<li class="toc-entry toc-h2"><a href="#result">Result</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#depolyment">Depolyment</a></li>
+</ul><h1 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
+<p>Fastai is such an amazing framework that allows you to build state of the art neural net model with a few lines of code when you are only two lessons in its course. After completing the first part of fastai course, I decided to apply what I learnt to do this project (learn by doing is also taught in the course), and I will walkthrough my experience and result of the project in this post.</p>
+
+<p>Often time, it’s common to see birds in an outdoor environment, making me wonder what species the birds are and how I should call them. Then, I found this great Kaggle dataset <a href="https://www.kaggle.com/datasets/gpiosenka/100-bird-species">BIRDS 400</a> which made this project possible. The objective is to build a web app so that anyone can simply open it in a broswer, upload a bird image and get an answer quickly.</p>
+
+<h1 id="training-neural-network-with-fastai">
+<a class="anchor" href="#training-neural-network-with-fastai" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training neural network with fastai</h1>
+<h2 id="install-and-import-libraries">
+<a class="anchor" href="#install-and-import-libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install and import libraries</h2>
+<div class="Toast">
+   <span class="Toast-icon"><svg class="octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
+   <span class="Toast-content">Training process was done in Colab Pro</span>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">timm</span><span class="p">,</span> <span class="n">fastai</span>
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">rom</span> <span class="n">timm</span> <span class="kn">import</span> <span class="nn">create_model</span>
+</code></pre></div></div>
+
+<h2 id="dataset">
+<a class="anchor" href="#dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataset</h2>
+<p>The Kaggle dataset contains 58388 training images, 2000 validation images and 2000 test images of 400 bird species. As the dataset provider Gerry mentions, this is high-quality dataset that each image has only one bird and bird’s portion of the image is more than 50%. Since Gerry had kindly done the hard work of cleaning the data, we can take a look at one image before proceeding.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s">'train'</span><span class="o">/</span><span class="s">'HOATZIN'</span><span class="p">).</span><span class="n">ls</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">PILImage</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/images/bird_classifier//Hoatzin.jpg" alt=""></p>
+
+<h2 id="construct-dataloaders">
+<a class="anchor" href="#construct-dataloaders" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construct DataLoaders</h2>
+<p>The main idea is using transfer learning to build a state-of-the-art deep learning model, which is efficient and saves a lot of training time.</p>
+
+<p>Before we start training, we need to first create dataloaders which hold our training data in batches. These batches will later be sent in sequence to GPU to train our neural network. One part we are doing differently is randomly split data into training and validation instead of using the given sets, because Gerry notes in dataset description that both given validation and test sets are hand picked as the “best” images, resulting in high evaluation scores. We will still use the given test set as unseen data for evaluation, but keep in mind test set may not be representative of real world data. Let’s take a peek at one batch in dataloaders to make sure everything is okay:</p>
+
+<p><img src="/images//bird_classifier/batch.PNG" alt=""></p>
+
+<h2 id="pretrained-model-with-timm">
+<a class="anchor" href="#pretrained-model-with-timm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pretrained Model with timm</h2>
+<p>timm is a wonderful library by Ross Wightman that provides state-of-the-art pretrained model for image classification. We will use one of the best models, Efficient Net, specifically “efficientnet_b3a”. For more details about timm, please refer to this <a href="https://github.com/rwightman/pytorch-image-models">repository</a>.</p>
+
+<h2 id="training">
+<a class="anchor" href="#training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h2>
+<p>Let’s start training our model! As you know, learning rate is one of the most important hyperparameter in training neural network. Fortunately, fastai has convenient learning rate finder that gives us a sense of how changing learning rate affects losses in the model. 
+<img src="/images/bird_classifier/lr_find.PNG" alt=""></p>
+
+<p>After picking a learning rate, we freeze all layers of neural net except the last one, and train 3 epochs. The last layer is created specifically for our task of classifying 400 bird species and is how we can do transfer learning. Result of training 3 epochs:</p>
+
+<p><img src="/images/bird_classifier/first_train.PNG" alt=""></p>
+
+<p>Wow! We already reached 94.5% accuracy on validation set. We can push it further by unfreezing all layers and training it more. This time, we use <a href="https://arxiv.org/abs/1506.01186">discriminative learning rate</a> which gradually increases learning rates for later layers, because later layers recognize more complex pattern in images.</p>
+
+<p><img src="/images/bird_classifier/second_train.PNG" alt=""></p>
+
+<p>After 10 epochs, final accuracy is 95.17% on validation set. A look at the result on validation:</p>
+
+<p><img src="/images/bird_classifier/result.PNG" alt=""></p>
+
+<h2 id="result">
+<a class="anchor" href="#result" aria-hidden="true"><span class="octicon octicon-link"></span></a>Result</h2>
+<p>Finally, we evaluate the model on test set which is given and has not been seen in the training process. The result is surprisingly 99.4% accuracy on test set of 2000 images. Please note that this score is unlikely representative of real world generalization performance as described by Gerry, Kaggle dataset provider. Still, given the high score, we have our underlying model for web app and are ready for delopyment.</p>
+
+<h1 id="depolyment">
+<a class="anchor" href="#depolyment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Depolyment</h1>
+
+  </div><a class="u-url" href="/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/fastpages/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/fastpages/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/fastpages/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science practitioner passtionate about modern machine learning and deep learning</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/edwinhung" target="_blank" title="edwinhung"><svg class="svg-icon grey"><use xlink:href="/fastpages/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/TheEdwinHung" target="_blank" title="TheEdwinHung"><svg class="svg-icon grey"><use xlink:href="/fastpages/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

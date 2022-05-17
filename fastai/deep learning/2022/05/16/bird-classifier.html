@@ -79,7 +79,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      6 min read
     
 </span></p>
 
@@ -110,7 +110,14 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#result">Result</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#depolyment">Depolyment</a></li>
+<li class="toc-entry toc-h1"><a href="#depolyment">Depolyment</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#microsoft-azure-function">Microsoft Azure Function</a></li>
+<li class="toc-entry toc-h2"><a href="#heroku-and-voila">Heroku and Voila</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a></li>
+<li class="toc-entry toc-h1"><a href="#improvement">Improvement</a></li>
 </ul><h1 id="introduction">
 <a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
 <p>Fastai is such an amazing framework that allows you to build state of the art neural net model with a few lines of code when you are only two lessons in its course. After completing the first part of fastai course, I decided to apply what I learnt to do this project (learn by doing is also taught in the course), and I will walkthrough my experience and result of the project in this post.</p>
@@ -149,7 +156,7 @@ window.onload = wrap_img;
 
 <h2 id="pretrained-model-with-timm">
 <a class="anchor" href="#pretrained-model-with-timm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pretrained Model with timm</h2>
-<p>timm is a wonderful library by Ross Wightman that provides state-of-the-art pretrained model for image classification. We will use one of the best models, Efficient Net, specifically “efficientnet_b3a”. For more details about timm, please refer to this <a href="https://github.com/rwightman/pytorch-image-models">repository</a>.</p>
+<p>timm is a wonderful library by Ross Wightman that provides state-of-the-art pretrained model for image classification. We will use one of the best models, Efficient Net, specifically “efficientnet_b3a”. For more details about timm, please refer to this <a href="https://github.com/rwightman/pytorch-image-models">repository</a>. (timm is now integrated into fastai at the time of writing this blog post, check out <a href="https://timm.fast.ai/">timm.fast.ai</a>)</p>
 
 <h2 id="training">
 <a class="anchor" href="#training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h2>
@@ -174,6 +181,33 @@ window.onload = wrap_img;
 
 <h1 id="depolyment">
 <a class="anchor" href="#depolyment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Depolyment</h1>
+<p>Depolying a machine learning model is not straightforward, especially for neural net, because our model is complex and big and library dependencies are also included in server space. In our case, directly depolying to Heroku would easily exceed 500GB server image size limit. So, how do we do it? We will first depoly the model above to Azure Function and let Heroku web app make request to Azure Function.</p>
+<h2 id="microsoft-azure-function">
+<a class="anchor" href="#microsoft-azure-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Microsoft Azure Function</h2>
+<p>Azure Function is a severless infrastructure provided by Microsoft Azure, simplifying management tasks. Thanks to fastai <a href="https://course.fast.ai/deployment_azure_functions">tutorial</a> and this great <a href="https://medium.com/pytorch/efficient-serverless-deployment-of-pytorch-models-on-azure-dc9c2b6bfee7">guide</a>, we can leverage optimized ONNX Runtime to greatly reduce memory footprint. In fact, the model depolyment package in onnx format is 47.5MB. Azure Function’s execution is triggered by HTTP request, so we can get prediction by sending a HTTP request with image parameter. Once we test the deployment on Azure Function is working as expected, we move on to build the final web app which is what our users will see and interact with.</p>
+
+<h2 id="heroku-and-voila">
+<a class="anchor" href="#heroku-and-voila" aria-hidden="true"><span class="octicon octicon-link"></span></a>Heroku and Voila</h2>
+<p>Since Azure Function offloads heavy tasks of model management, we build a plain web app which can be easily hosted on Heroku. We first utilize Voila to transform a jupyter notebook into interactive page and hosting it on Heroku is straightforward.(fastai offers <a href="https://course.fast.ai/deployment_heroku">tutorial</a> on this part) The mechanism under the hood works as a user uploads a bird image to the web app which then makes HTTP request with image parameter to Azure Function and gets back a prediction from the model.</p>
+
+<h1 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+<p>We have built an amazing bird image classifier with an underlying deep learning model capable of recognizing 400 bird species, hosted on Azure Function and Heroku. Anyone can go to this web app in a browser and get prediction from the model without any prerequisites. Try it out <a href="https://birdclassifier.herokuapp.com/">here</a>.</p>
+
+<p>Thanks for reading! For more details about this project, here is my <a href="https://github.com/edwinhung/Birds_Image_Classifier">repo</a>.</p>
+
+<h1 id="improvement">
+<a class="anchor" href="#improvement" aria-hidden="true"><span class="octicon octicon-link"></span></a>Improvement</h1>
+<p>As my first project with fastai, I am happy that it’s up and running. However,
+I become aware of tons of room for improvement.</p>
+<ol>
+  <li>Before training neural network, I should explore and experiment the dataset, which helps to get insights on techniques to improve performance, such as data augmentation.</li>
+  <li>Training with the full dataset easily takes more than 30 minutes, so subsetting the dataset and work with the representative sample is a great way to experiment and test models.</li>
+  <li>Having a baseline model is critical in machine learning project workflow, because it helps to spot problems early on and also serves as a benchmark.</li>
+  <li>I could spend more time exploring other architectures than tuning hypterparaters on the model.</li>
+</ol>
+
+<p>There are a lot more than I could mention here, including a different deployment. I will have these in mind on my next project.</p>
 
   </div><a class="u-url" href="/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html" hidden></a>
 </article>

@@ -137,7 +137,7 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s">'train'</span><span class="o">/</span><span class="s">'HOATZIN'</span><span class="p">).</span><span class="n">ls</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">PILImage</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 </code></pre></div></div>
-<p><img src="/images/bird_classifier//Hoatzin.jpg" alt=""></p>
+<p><img src="/images/bird_classifier/Hoatzin.jpg" alt=""></p>
 
 <h2 id="construct-dataloaders">
 <a class="anchor" href="#construct-dataloaders" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construct DataLoaders</h2>
@@ -145,7 +145,7 @@ window.onload = wrap_img;
 
 <p>Before we start training, we need to first create dataloaders which hold our training data in batches. These batches will later be sent in sequence to GPU to train our neural network. One part we are doing differently is randomly split data into training and validation instead of using the given sets, because Gerry notes in dataset description that both given validation and test sets are hand picked as the “best” images, resulting in high evaluation scores. We will still use the given test set as unseen data for evaluation, but keep in mind test set may not be representative of real world data. Let’s take a peek at one batch in dataloaders to make sure everything is okay:</p>
 
-<p><img src="/images//bird_classifier/batch.PNG" alt=""></p>
+<p><img src="/images/bird_classifier/batch.PNG" alt=""></p>
 
 <h2 id="pretrained-model-with-timm">
 <a class="anchor" href="#pretrained-model-with-timm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pretrained Model with timm</h2>

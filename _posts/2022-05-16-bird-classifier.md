@@ -27,7 +27,7 @@ The Kaggle dataset contains 58388 training images, 2000 validation images and 20
 img = (path/'train'/'HOATZIN').ls()[0]
 PILImage.create(img)
 ```
-![](/images/bird_classifier/Hoatzin.jpg)
+![]({{}}/images/bird_classifier/Hoatzin.jpg)
 
 ## Construct DataLoaders
 The main idea is using transfer learning to build a state-of-the-art deep learning model, which is efficient and saves a lot of training time. 

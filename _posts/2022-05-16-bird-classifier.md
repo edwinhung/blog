@@ -34,26 +34,26 @@ The main idea is using transfer learning to build a state-of-the-art deep learni
 
 Before we start training, we need to first create dataloaders which hold our training data in batches. These batches will later be sent in sequence to GPU to train our neural network. One part we are doing differently is randomly split data into training and validation instead of using the given sets, because Gerry notes in dataset description that both given validation and test sets are hand picked as the "best" images, resulting in high evaluation scores. We will still use the given test set as unseen data for evaluation, but keep in mind test set may not be representative of real world data. Let's take a peek at one batch in dataloaders to make sure everything is okay:
 
-![](/images/bird_classifier/batch.PNG)
+![]({{site.baseurl}}/images/bird_classifier/batch.PNG)
 
 ## Pretrained Model with timm
 timm is a wonderful library by Ross Wightman that provides state-of-the-art pretrained model for image classification. We will use one of the best models, Efficient Net, specifically "efficientnet_b3a". For more details about timm, please refer to this [repository](https://github.com/rwightman/pytorch-image-models).
 
 ## Training
 Let's start training our model! As you know, learning rate is one of the most important hyperparameter in training neural network. Fortunately, fastai has convenient learning rate finder that gives us a sense of how changing learning rate affects losses in the model. 
-![](/images/bird_classifier/lr_find.PNG)
+![]({{site.baseurl}}/images/bird_classifier/lr_find.PNG)
 
 After picking a learning rate, we freeze all layers of neural net except the last one, and train 3 epochs. The last layer is created specifically for our task of classifying 400 bird species and is how we can do transfer learning. Result of training 3 epochs:
 
-![](/images/bird_classifier/first_train.PNG)
+![]({{site.baseurl}}/images/bird_classifier/first_train.PNG)
 
 Wow! We already reached 94.5% accuracy on validation set. We can push it further by unfreezing all layers and training it more. This time, we use [discriminative learning rate](https://arxiv.org/abs/1506.01186) which gradually increases learning rates for later layers, because later layers recognize more complex pattern in images. 
 
-![](/images/bird_classifier/second_train.PNG)
+![]({{site.baseurl}}/images/bird_classifier/second_train.PNG)
 
 After 10 epochs, final accuracy is 95.17% on validation set. A look at the result on validation:
 
-![](/images/bird_classifier/result.PNG)
+![]({{site.baseurl}}/images/bird_classifier/result.PNG)
 
 ## Result
 Finally, we evaluate the model on test set which is given and has not been seen in the training process. The result is surprisingly 99.4% accuracy on test set of 2000 images. Please note that this score is unlikely representative of real world generalization performance as described by Gerry, Kaggle dataset provider. Still, given the high score, we have our underlying model for web app and are ready for delopyment.

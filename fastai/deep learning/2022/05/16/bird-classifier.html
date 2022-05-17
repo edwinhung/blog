@@ -145,7 +145,7 @@ window.onload = wrap_img;
 
 <p>Before we start training, we need to first create dataloaders which hold our training data in batches. These batches will later be sent in sequence to GPU to train our neural network. One part we are doing differently is randomly split data into training and validation instead of using the given sets, because Gerry notes in dataset description that both given validation and test sets are hand picked as the “best” images, resulting in high evaluation scores. We will still use the given test set as unseen data for evaluation, but keep in mind test set may not be representative of real world data. Let’s take a peek at one batch in dataloaders to make sure everything is okay:</p>
 
-<p><img src="/images/bird_classifier/batch.PNG" alt=""></p>
+<p><img src="/fastpages/images/bird_classifier/batch.PNG" alt=""></p>
 
 <h2 id="pretrained-model-with-timm">
 <a class="anchor" href="#pretrained-model-with-timm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pretrained Model with timm</h2>
@@ -154,19 +154,19 @@ window.onload = wrap_img;
 <h2 id="training">
 <a class="anchor" href="#training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h2>
 <p>Let’s start training our model! As you know, learning rate is one of the most important hyperparameter in training neural network. Fortunately, fastai has convenient learning rate finder that gives us a sense of how changing learning rate affects losses in the model. 
-<img src="/images/bird_classifier/lr_find.PNG" alt=""></p>
+<img src="/fastpages/images/bird_classifier/lr_find.PNG" alt=""></p>
 
 <p>After picking a learning rate, we freeze all layers of neural net except the last one, and train 3 epochs. The last layer is created specifically for our task of classifying 400 bird species and is how we can do transfer learning. Result of training 3 epochs:</p>
 
-<p><img src="/images/bird_classifier/first_train.PNG" alt=""></p>
+<p><img src="/fastpages/images/bird_classifier/first_train.PNG" alt=""></p>
 
 <p>Wow! We already reached 94.5% accuracy on validation set. We can push it further by unfreezing all layers and training it more. This time, we use <a href="https://arxiv.org/abs/1506.01186">discriminative learning rate</a> which gradually increases learning rates for later layers, because later layers recognize more complex pattern in images.</p>
 
-<p><img src="/images/bird_classifier/second_train.PNG" alt=""></p>
+<p><img src="/fastpages/images/bird_classifier/second_train.PNG" alt=""></p>
 
 <p>After 10 epochs, final accuracy is 95.17% on validation set. A look at the result on validation:</p>
 
-<p><img src="/images/bird_classifier/result.PNG" alt=""></p>
+<p><img src="/fastpages/images/bird_classifier/result.PNG" alt=""></p>
 
 <h2 id="result">
 <a class="anchor" href="#result" aria-hidden="true"><span class="octicon octicon-link"></span></a>Result</h2>

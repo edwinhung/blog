@@ -1,1 +1,1 @@
-Sitemap: https://edwinhung.github.io/fastpages/sitemap.xml
+Sitemap: https://edwinhung.github.io/blog/sitemap.xml

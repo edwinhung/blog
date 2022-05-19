@@ -10,17 +10,17 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="First fastai project" />
 <meta property="og:description" content="First fastai project" />
-<link rel="canonical" href="https://edwinhung.github.io/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html" />
-<meta property="og:url" content="https://edwinhung.github.io/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html" />
+<link rel="canonical" href="https://edwinhung.github.io/blog/fastai/deep%20learning/2022/05/16/bird-classifier.html" />
+<meta property="og:url" content="https://edwinhung.github.io/blog/fastai/deep%20learning/2022/05/16/bird-classifier.html" />
 <meta property="og:site_name" content="Shangchieh(Edwin) Hung" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2022-05-16T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Bird Species Image Classifier with fastai" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-05-16T00:00:00-05:00","datePublished":"2022-05-16T00:00:00-05:00","description":"First fastai project","headline":"Bird Species Image Classifier with fastai","mainEntityOfPage":{"@type":"WebPage","@id":"https://edwinhung.github.io/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html"},"url":"https://edwinhung.github.io/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-05-16T00:00:00-05:00","datePublished":"2022-05-16T00:00:00-05:00","description":"First fastai project","headline":"Bird Species Image Classifier with fastai","mainEntityOfPage":{"@type":"WebPage","@id":"https://edwinhung.github.io/blog/fastai/deep%20learning/2022/05/16/bird-classifier.html"},"url":"https://edwinhung.github.io/blog/fastai/deep%20learning/2022/05/16/bird-classifier.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/fastpages/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://edwinhung.github.io/fastpages/feed.xml" title="Shangchieh(Edwin) Hung" /><link rel="shortcut icon" type="image/x-icon" href="/fastpages/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://edwinhung.github.io/blog/feed.xml" title="Shangchieh(Edwin) Hung" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
 <script>
@@ -55,7 +55,7 @@ window.onload = wrap_img;
 </head>
 <body><header class="site-header">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/fastpages/">Shangchieh(Edwin) Hung</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Shangchieh(Edwin) Hung</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -65,7 +65,7 @@ window.onload = wrap_img;
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/fastpages/about/">About Me</a><a class="page-link" href="/fastpages/search/">Search</a><a class="page-link" href="/fastpages/categories/">Tags</a></div>
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -86,10 +86,10 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/fastpages/categories/#fastai">fastai</a>
+        <a class="category-tags-link" href="/blog/categories/#fastai">fastai</a>
         &nbsp;
       
-        <a class="category-tags-link" href="/fastpages/categories/#deep learning">deep learning</a>
+        <a class="category-tags-link" href="/blog/categories/#deep learning">deep learning</a>
         
       
       </p>
@@ -144,7 +144,7 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s">'train'</span><span class="o">/</span><span class="s">'HOATZIN'</span><span class="p">).</span><span class="n">ls</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">PILImage</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 </code></pre></div></div>
-<p><img src="/fastpages/images/bird_classifier/Hoatzin.jpg" alt=""></p>
+<p><img src="/blog/images/bird_classifier/Hoatzin.jpg" alt=""></p>
 
 <h2 id="construct-dataloaders">
 <a class="anchor" href="#construct-dataloaders" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construct DataLoaders</h2>
@@ -152,7 +152,7 @@ window.onload = wrap_img;
 
 <p>Before we start training, we need to first create dataloaders which hold our training data in batches. These batches will later be sent in sequence to GPU to train our neural network. One part we are doing differently is randomly split data into training and validation instead of using the given sets, because Gerry notes in dataset description that both given validation and test sets are hand picked as the “best” images, resulting in high evaluation scores. We will still use the given test set as unseen data for evaluation, but keep in mind test set may not be representative of real world data. Let’s take a peek at one batch in dataloaders to make sure everything is okay:</p>
 
-<p><img src="/fastpages/images/bird_classifier/batch.PNG" alt=""></p>
+<p><img src="/blog/images/bird_classifier/batch.PNG" alt=""></p>
 
 <h2 id="pretrained-model-with-timm">
 <a class="anchor" href="#pretrained-model-with-timm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pretrained Model with timm</h2>
@@ -161,19 +161,19 @@ window.onload = wrap_img;
 <h2 id="training">
 <a class="anchor" href="#training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h2>
 <p>Let’s start training our model! As you know, learning rate is one of the most important hyperparameter in training neural network. Fortunately, fastai has convenient learning rate finder that gives us a sense of how changing learning rate affects losses in the model. 
-<img src="/fastpages/images/bird_classifier/lr_find.PNG" alt=""></p>
+<img src="/blog/images/bird_classifier/lr_find.PNG" alt=""></p>
 
 <p>After picking a learning rate, we freeze all layers of neural net except the last one, and train 3 epochs. The last layer is created specifically for our task of classifying 400 bird species and is how we can do transfer learning. Result of training 3 epochs:</p>
 
-<p><img src="/fastpages/images/bird_classifier/first_train.PNG" alt=""></p>
+<p><img src="/blog/images/bird_classifier/first_train.PNG" alt=""></p>
 
 <p>Wow! We already reached 94.5% accuracy on validation set. We can push it further by unfreezing all layers and training it more. This time, we use <a href="https://arxiv.org/abs/1506.01186">discriminative learning rate</a> which gradually increases learning rates for later layers, because later layers recognize more complex pattern in images.</p>
 
-<p><img src="/fastpages/images/bird_classifier/second_train.PNG" alt=""></p>
+<p><img src="/blog/images/bird_classifier/second_train.PNG" alt=""></p>
 
 <p>After 10 epochs, final accuracy is 95.17% on validation set. A look at the result on validation:</p>
 
-<p><img src="/fastpages/images/bird_classifier/result.PNG" alt=""></p>
+<p><img src="/blog/images/bird_classifier/result.PNG" alt=""></p>
 
 <h2 id="result">
 <a class="anchor" href="#result" aria-hidden="true"><span class="octicon octicon-link"></span></a>Result</h2>
@@ -209,21 +209,21 @@ I become aware of tons of room for improvement.</p>
 
 <p>There are a lot more than I could mention here, including a different deployment. I will have these in mind on my next project.</p>
 
-  </div><a class="u-url" href="/fastpages/fastai/deep%20learning/2022/05/16/bird-classifier.html" hidden></a>
+  </div><a class="u-url" href="/blog/fastai/deep%20learning/2022/05/16/bird-classifier.html" hidden></a>
 </article>
 
       </div>
     </main><footer class="site-footer h-card">
-  <data class="u-url" href="/fastpages/"></data>
+  <data class="u-url" href="/blog/"></data>
 
   <div class="wrapper">
 
     <div class="footer-col-wrapper">
       <div class="footer-col">
         <p class="feed-subscribe">
-          <a href="/fastpages/feed.xml">
+          <a href="/blog/feed.xml">
             <svg class="svg-icon orange">
-              <use xlink:href="/fastpages/assets/minima-social-icons.svg#rss"></use>
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
             </svg><span>Subscribe</span>
           </a>
         </p>
@@ -233,7 +233,7 @@ I become aware of tons of room for improvement.</p>
       </div>
     </div>
 
-    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/edwinhung" target="_blank" title="edwinhung"><svg class="svg-icon grey"><use xlink:href="/fastpages/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/TheEdwinHung" target="_blank" title="TheEdwinHung"><svg class="svg-icon grey"><use xlink:href="/fastpages/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/edwinhung" target="_blank" title="edwinhung"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/TheEdwinHung" target="_blank" title="TheEdwinHung"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
 </div>
 
   </div>
